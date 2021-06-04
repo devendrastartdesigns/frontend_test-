@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    command: php -S 0.0.0.0:80 -t /var/www/frontend_test/public
+    tty: true
+    restart: always
+    image: php:7
+    container_name: e7-web
+    expose:
+      - "80"
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/frontend_test:rw,delegated
+
+  composer:
+    container_name: e7-php
+    image: composer
+    command: install --prefer-dist --no-interaction --optimize-autoloader --ignore-platform-reqs --no-dev
+    volumes:
+      - .:/app
